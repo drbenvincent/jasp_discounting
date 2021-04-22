@@ -80,6 +80,7 @@ I would also recommend that you set a random seed value in the Advanced tab. Thi
 You can do different analysis by pasting in different JAGS models. Here are a list of models (_which will hopefully grow over time_).
 
 ## Exponential discounting
+The key parameter here is `k`, so make sure that is added in the 'show results for these parameters' box.
 
 ```
 model{
