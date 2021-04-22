@@ -77,7 +77,7 @@ To get really accurate results, you might also want to increase the number of  s
 I would also recommend that you set a random seed value in the Advanced tab. This will help others to be able to precisely replicate your results.
 
 # Alternative models
-You can do different analysis by pasting in different JAGS models. Here are a list of models (_which will hopefully grow over time_).
+You can do a different analysis by pasting in different JAGS models. Here are a list of models. This list will grow over time if people find this useful - but let me know through [@inferenceLab](https://twitter.com/inferencelab) on twitter, or create an Issue here on GitHub.
 
 ## Exponential discounting
 The key parameter here is `k`, so make sure that is added in the 'show results for these parameters' box.
@@ -87,7 +87,7 @@ model{
   # set up priors for each participant
   for (p in 1:max(ID))
   {
-    logk[p] ~ dnorm(0.01, 1/(0.5^2))
+    k[p] ~ dnorm(0.01, 1/(0.5^2))
     alpha[p] ~ dexp(0.01)
     epsilon[p] ~ dbeta(1.1 , 10.9 ) T(,0.5)
   }
