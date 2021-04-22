@@ -16,13 +16,15 @@ If you literally love this, then consider [buying me a coffee](https://www.buyme
 - Enable JAGS by running JASP, click on the "+" icon in the top right and check the tick box called "JAGS".
 
 ## Data preparation
-Get your data into the form where you have the following columns:
+This might be the only really taxing step... Get your data into the form where you have the following columns:
 - `A` = reward magnitude of the smaller sooner reward
 - `DA` = delay to the smaller sooner reward
 - `B` = reward magnitude of the larger later reward
 - `DB` = delay to the larger later reward
 - `R` = participant response, coded as 1 = chose larger later, 0 = chose smaller sooner.
 - `ID` = participant ID. These need to be `1, 2, 3, ... N`.
+
+Each row will correspond to a single trial (choice) of the delay discounting experiment.
 
 This needs to be saved in `.csv` format for easy import to JASP. If you are preparing your data in excel, you can simply export as a `.csv` file.
 
