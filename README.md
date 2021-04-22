@@ -81,8 +81,34 @@ I would also recommend that you set a random seed value in the Advanced tab. Thi
 # Alternative models
 You can do a different analysis by pasting in different JAGS models. Here are a list of models. This list will grow over time if people find this useful - but let me know through [@inferenceLab](https://twitter.com/inferencelab) on twitter, or create an Issue here on GitHub.
 
+## Hyperbolic discounting with magnitude effect
+The key parameters here are `m` and `c`, so make sure they are added in the 'show results for these parameters' box. This model involves no pooling - no hierarchical estimation.
+
+```
+model{
+  # set up priors for each participant
+  for (p in 1:max(ID))
+  {
+    m[p] ~ dnorm(-2.43, 1/(0.5^2))
+    c[p] ~ dnorm(0, 1/(1000^2))
+    alpha[p] ~ dexp(0.01)
+    epsilon[p] ~ dbeta(1.1 , 10.9 ) T(,0.5)
+  }
+  # loop over all trials
+  for (t in 1:length(R))
+  {
+    VA[t] <- A[t] / (1+(exp( m[ID[t]]*log(A[t])+c[ID[t]])))
+    VB[t] <- B[t] / (1+(exp( m[ID[t]]*log(B[t])+c[ID[t]])))
+    P[t] <- epsilon[ID[t]] + (1-2*epsilon[ID[t]]) * phi( (VB[t]-VA[t]) / alpha[ID[t]] )
+    R[t] ~ dbern(P[t])
+  }  
+}
+```
+
+**Warning:** It is not always the case that your data will be able to give meaningful estimates. For example, while the Kirby 27-item questionnaire is used to estimate the magnitude effect (in a slightly different way), it doesn't mean it is a test for that. For example, the range of reward magnitudes is pretty narrow, so the data alone don't always do a great job of informing us of the `m` or `c` parameters. So users should be aware of this and perhaps alter the priors according to their use case. By default I would recommend using the hyperbolic model (no magnitude effect) with Kirby data and only use the magnitude effect model with delay discounting choices which are designed to estimate discount rates over a wider range of magnitudes.
+
 ## Exponential discounting
-The key parameter here is `k`, so make sure that is added in the 'show results for these parameters' box.
+The key parameter here is `k`, so make sure that is added in the 'show results for these parameters' box. This model involves no pooling - no hierarchical estimation.
 
 ```
 model{
